@@ -17,9 +17,9 @@ const MyStack = () => {
                 />
 
                 <Stack.Screen
-                    name="Profile"
+                    name="Hallpass"
                     Component={ProfileScreen}
-                    options={{ title: 'Profile' }}
+                    options={{ title: 'Hallpass' }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
@@ -30,24 +30,40 @@ export default class App extends Component {
     constructor() {
         super();
         this.state = {
-            usernameText: "",
+            nameText: "",
+            nounText: "",
+            eventText: "",
         }
     }
 
     HomeScreen = ({ navigation, route }) => {
         let name;
+        let noun;
+        let userEvent;
 
         return (
             <View style={styles.container}>
                 <TextInput
                     style={styles.textInput}
                     value={name}
-                    placeholder={"User Name"}
-                    onChangeText={newName => { name = newName; this.setState({ usernameText: name }) }}
+                    placeholder={"Name"}
+                    onChangeText={newName => { name = newName; this.setState({ nameText: name }) }}
+                />
+                <TextInput
+                    style={styles.textInput}
+                    value={noun}
+                    placeholder={"Noun"}
+                    onChangeText={newNoun => { noun = newNoun; this.setState({ nounText: noun }) }}
+                />
+                <TextInput
+                    style={styles.textInput}
+                    value={userEvent}
+                    placeholder={"An Event"}
+                    onChangeText={newUserEvent => { userEvent = newUserEvent; this.setState({ eventText: userEvent }) }}
                 />
                 <Button
-                    title="Go to Profile"
-                    onPress={() => { navigation.navigate('Profile', { profileName: name }) }}
+                    title="Make my hall pass"
+                    onPress={() => { navigation.navigate('Hallpass', { profileName: name }) }}
                     />
 
                 <StatusBar style="auto" />
@@ -59,9 +75,13 @@ export default class App extends Component {
 
         return (
             <View style={styles.container}>
-                <Text>Welcome to the profile screen</Text>
-                <Text> We received {route.params.profileName} from Home.</Text>
-                <Text> This is the name from the state variable: {this.state.usernameText}</Text>
+                <View style={styles.container}>
+                    <Text style={styles.hallPassVertical}> Hall Pass</Text>
+                </View>
+                <View style={styles.container}>
+                    <Text> We received {route.params.profileName} from Home.</Text>
+                    <Text> This is the name from the state variable: {this.state.usernameText}</Text>
+                </View>
                 <StatusBar style="auto" />
             </View>
         )
@@ -79,9 +99,9 @@ export default class App extends Component {
                     />
 
                     <Stack.Screen
-                        name="Profile"
+                        name="Hallpass"
                         component={this.ProfileScreen}
-                        options={{ title: 'Profile' }}
+                        options={{ title: 'Hallpass' }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
@@ -98,8 +118,16 @@ const styles = StyleSheet.create({
     },
   textInput: {
     height: 40,
+    width: 300,
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  hallPassVertical: {
+      transform: [{rotate: '270deg'}],
+      fontSize: 75,
+      fontWeight: 'bold',
+      flex: 1,
+      flexDirection: 'column',
   },
 });
