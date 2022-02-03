@@ -28,11 +28,15 @@ const MyStack = () => {
 
 export default class App extends Component {
     constructor() {
+        var today = new Date(),
+        date = today.getMonth() + '/' + today.getDate() + '/' + today.getFullYear();
         super();
         this.state = {
             nameText: "",
             nounText: "",
             eventText: "",
+            currentDate: date,
+
         }
     }
 
@@ -74,13 +78,24 @@ export default class App extends Component {
     ProfileScreen = ({ navigation, route }) => {
 
         return (
-            <View style={styles.container}>
-                <View style={styles.container}>
-                    <Text style={styles.hallPassVertical}> Hall Pass</Text>
+            <View style={styles.hallPassContainer}>
+                <View style={styles.hallPassVertical}>
+                    <Text style={styles.hallPassVerticalText}> Hall Pass</Text>
                 </View>
-                <View style={styles.container}>
-                    <Text> We received {route.params.profileName} from Home.</Text>
-                    <Text> This is the name from the state variable: {this.state.usernameText}</Text>
+                <View style={styles.hallPassHorizontal}>
+                    <View style={styles.libTitle}>
+                        <Text style={styles.libText}> Mad Libs</Text>
+                    </View>
+                    <View style={styles.libBody}>
+                        <Text style={styles.libDate}> Date: <Text style={[{textDecorationLine: 'underline',}]}>{this.state.currentDate}</Text></Text>
+                        <Text style={styles.libName}><View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nameText}</Text></View> is too cool</Text>
+                        <Text style={[{fontSize: 10, marginLeft: 60,}]}>NAME</Text>
+                        <Text style={styles.libNoun}>for <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nounText}</Text></View> class.</Text>
+                        <Text style={[{fontSize: 10, marginLeft: 90,}]}>NOUN</Text>
+                        <Text style={styles.libEvent}>Instead, he/she will be</Text>
+                        <Text style={styles.libEvent}>attending the <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.eventText}</Text></View></Text>
+                        <Text style={[{fontSize: 10, marginLeft: 180,}]}>EVENT</Text>
+                    </View>
                 </View>
                 <StatusBar style="auto" />
             </View>
@@ -124,10 +139,77 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   hallPassVertical: {
-      transform: [{rotate: '270deg'}],
-      fontSize: 75,
+    flex: 0,
+    width: '30%',
+    height: '100%',
+    //borderWidth: 1,
+    flexWrap: 'wrap',
+    backgroundColor: '#fff',
+    justifyContent: 'flex-end',
+    },
+  hallPassHorizontal: {
+    flex: 1,
+    flexDirection: 'column',
+    //borderWidth: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-end',
+    },
+  libTitle: {
+    width: '100%',
+    height: '10%',
+    //borderWidth: 1,
+  },
+  libText: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  libBody: {
+    width: '100%',
+    height: '90%',
+    //borderWidth: 1,
+  },
+  libDate: {
+    fontSize: 20,
+    paddingTop: 20,
+  },
+  libName: {
+    fontSize: 20,
+    paddingTop: 35,
+    paddingLeft: 20,
+  },
+  libNoun: {
+    fontSize: 20,
+    paddingTop: 35,
+    paddingLeft: 20,
+  },
+  libEvent: {
+    fontSize: 20,
+    paddingTop: 35,
+    paddingLeft: 20,
+  },
+  hallPassVerticalText: {
+      transform: [{rotate: '-90deg'}],
+      fontSize: 85,
       fontWeight: 'bold',
+  },
+  hallPassContainer: {
       flex: 1,
-      flexDirection: 'column',
+      borderWidth: 1,
+      flexDirection: 'row',
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+  },
+  underline: {
+      borderBottomWidth: 1,
+      borderBottomColor: 'black',
+      width: 100,
+  },
+  fillBlanks: {
+    textAlign: 'center',
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
   },
 });
