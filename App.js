@@ -88,12 +88,12 @@ export default class App extends Component {
                     </View>
                     <View style={styles.libBody}>
                         <Text style={styles.libDate}> Date: <Text style={[{textDecorationLine: 'underline',}]}>{this.state.currentDate}</Text></Text>
-                        <Text style={styles.libName}><View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nameText}</Text></View> is too cool</Text>
+                        <Text style={styles.libText}><View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nameText}</Text></View> is too cool</Text>
                         <Text style={[{fontSize: 10, marginLeft: 60,}]}>NAME</Text>
-                        <Text style={styles.libNoun}>for <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nounText}</Text></View> class.</Text>
+                        <Text style={styles.libText}>for <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nounText}</Text></View> class.</Text>
                         <Text style={[{fontSize: 10, marginLeft: 90,}]}>NOUN</Text>
-                        <Text style={styles.libEvent}>Instead, he/she will be</Text>
-                        <Text style={styles.libEvent}>attending the <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.eventText}</Text></View></Text>
+                        <Text style={styles.libText}>Instead, he/she will be</Text>
+                        <Text style={styles.libText}>attending the <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.eventText}</Text></View></Text>
                         <Text style={[{fontSize: 10, marginLeft: 180,}]}>EVENT</Text>
                     </View>
                 </View>
@@ -174,17 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingTop: 20,
   },
-  libName: {
-    fontSize: 20,
-    paddingTop: 35,
-    paddingLeft: 20,
-  },
-  libNoun: {
-    fontSize: 20,
-    paddingTop: 35,
-    paddingLeft: 20,
-  },
-  libEvent: {
+  libText: {
     fontSize: 20,
     paddingTop: 35,
     paddingLeft: 20,
