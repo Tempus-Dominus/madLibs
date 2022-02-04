@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react';
+import { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -41,34 +42,46 @@ export default class App extends Component {
     }
 
     HomeScreen = ({ navigation, route }) => {
-        let name;
-        let noun;
-        let userEvent;
+        const [name,setName]=useState('');
+        const [noun,setNoun]=useState('');
+        const [userEvent,setEvent]=useState('');
 
         return (
             <View style={styles.container}>
+                <View style={{alignItems: 'center',}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 25, padding: 10}}>Welcome to MadLibs</Text>
+                    <Text style={{paddingBottom: 40}}>Please enter a Name, Noun, and an Event. Once done, press 'Make my hall pass' to generate your hall pass.</Text>
+                </View>
                 <TextInput
                     style={styles.textInput}
                     value={name}
                     placeholder={"Name"}
-                    onChangeText={newName => { name = newName; this.setState({ nameText: name }) }}
+                    onChangeText={newName => { setName(newName); this.setState({ nameText: name }) }}
                 />
                 <TextInput
                     style={styles.textInput}
                     value={noun}
                     placeholder={"Noun"}
-                    onChangeText={newNoun => { noun = newNoun; this.setState({ nounText: noun }) }}
+                    onChangeText={newNoun => { setNoun(newNoun); this.setState({ nounText: noun }) }}
                 />
                 <TextInput
                     style={styles.textInput}
                     value={userEvent}
                     placeholder={"An Event"}
-                    onChangeText={newUserEvent => { userEvent = newUserEvent; this.setState({ eventText: userEvent }) }}
+                    onChangeText={newUserEvent => { setEvent(newUserEvent); this.setState({ eventText: userEvent }) }}
                 />
-                <Button
-                    title="Make my hall pass"
-                    onPress={() => { navigation.navigate('Hallpass', { profileName: name }) }}
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="Make my hall pass"
+                        onPress={() => { navigation.navigate('Hallpass', {theName: name, theNoun: noun, theEvent: userEvent,}) }}
                     />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="Clear Fields"
+                        onPress={() => { setName(''), setNoun(''), setEvent('') }}
+                    />
+                </View>
 
                 <StatusBar style="auto" />
             </View>
@@ -84,17 +97,22 @@ export default class App extends Component {
                 </View>
                 <View style={styles.hallPassHorizontal}>
                     <View style={styles.libTitle}>
-                        <Text style={styles.libText}> Mad Libs</Text>
+                        <Text style={styles.libTitleText}>Mad Libs</Text>
                     </View>
                     <View style={styles.libBody}>
                         <Text style={styles.libDate}> Date: <Text style={[{textDecorationLine: 'underline',}]}>{this.state.currentDate}</Text></Text>
-                        <Text style={styles.libText}><View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nameText}</Text></View> is too cool</Text>
+                        <Text style={styles.libText}><View style={styles.underline}><Text style={styles.fillBlanks}>{route.params.theName}</Text></View> is too cool</Text>
                         <Text style={[{fontSize: 10, marginLeft: 60,}]}>NAME</Text>
-                        <Text style={styles.libText}>for <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.nounText}</Text></View> class.</Text>
+                        <Text style={styles.libText}>for <View style={styles.underline}><Text style={styles.fillBlanks}>{route.params.theNoun}</Text></View> class.</Text>
                         <Text style={[{fontSize: 10, marginLeft: 90,}]}>NOUN</Text>
                         <Text style={styles.libText}>Instead, he/she will be</Text>
-                        <Text style={styles.libText}>attending the <View style={styles.underline}><Text style={styles.fillBlanks}>{this.state.eventText}</Text></View></Text>
+                        <Text style={styles.libText}>attending the <View style={styles.underline}><Text style={styles.fillBlanks}>{route.params.theEvent}</Text></View></Text>
                         <Text style={[{fontSize: 10, marginLeft: 180,}]}>EVENT</Text>
+                    </View>
+                    <View style={styles.libSig}>
+                        <View style={styles.libSigBox}>
+                            <Text style={styles.libSigTitle}>Signature</Text>
+                        </View>
                     </View>
                 </View>
                 <StatusBar style="auto" />
@@ -131,6 +149,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     },
+  buttonContainer: {
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    },
   textInput: {
     height: 40,
     width: 300,
@@ -157,6 +180,12 @@ const styles = StyleSheet.create({
   libTitle: {
     width: '100%',
     height: '10%',
+  },
+  libTitleText: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center',
     //borderWidth: 1,
   },
   libText: {
@@ -164,11 +193,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     justifyContent: 'center',
     textAlign: 'center',
+    //borderWidth: 1,
   },
   libBody: {
     width: '100%',
-    height: '90%',
+    height: '70%',
     //borderWidth: 1,
+  },
+  libSig: {
+    width: '100%',
+    height: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //borderWidth: 1,
+  },
+  libSigBox: {
+    width: '85%',
+    height: '65%',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    borderWidth: 4,
+  },
+  libSigTitle: {
+    fontSize: 10,
+    padding: 2.5,
+    textAlign: 'center',
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
   },
   libDate: {
     fontSize: 20,
